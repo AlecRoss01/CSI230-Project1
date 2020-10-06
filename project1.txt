@@ -5,8 +5,28 @@ CURRENTTIME="$(date +"%x %r %z")"
 TIMESTAMP="Updated on $CURRENTTIME by $USER"
 
 #FUNCTIONS
+home_space() {
+    if [ "$(id -u)" = "0" ]; then
+        echo "<h2>Home directory space by user</h2>"
+        echo "<pre>"
+        echo "Bytes Directory"
+        du -s /home/* | sort -nr
+        echo "</pre>"
+    fi
+
+}
 system_info() {
-	echo "System Info"
+	echo "<h2>System Info</h2>"
+	echo "<pre>"
+	uname -or
+	echo "</pre>"
+}
+
+system_uptime(){
+	echo "<h2>System uptime</h2>"
+	echo "<pre>"
+	uptime
+	echo "</pre>"
 }
 
 system_memory() {
@@ -17,27 +37,26 @@ system_memory() {
 }
 
 system_ip() {
-
+	echo "<h2>IP Info</h2>"
 }
 
 
 #MAIN
-if [$(whoami)="root"]; then
+
 cat <<- _EOF_
 	<html>
 	<head>
-    		<title>
-    		</title>
+			<title>
+			</title>
 	</head>
 	<body>
+	$(home_space)
+	$(system_uptime)
 	$(system_info)
 	$(system_memory)
 	</body>
 	</html>
 _EOF_
-else
-	echo "please run as root"
-	exit
 
 
 
