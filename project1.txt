@@ -1,0 +1,43 @@
+#!/bin/bash
+
+TITLE="System Information For $HOSTNAME"
+CURRENTTIME="$(date +"%x %r %z")"
+TIMESTAMP="Updated on $CURRENTTIME by $USER"
+
+#FUNCTIONS
+system_info() {
+	echo "System Info"
+}
+
+system_memory() {
+	echo "<h2>Filesystem space</h2>"
+	echo "<pre>"
+	df
+	echo "</pre>"
+}
+
+system_ip() {
+
+}
+
+
+#MAIN
+if [$(whoami)="root"]; then
+cat <<- _EOF_
+	<html>
+	<head>
+    		<title>
+    		</title>
+	</head>
+	<body>
+	$(system_info)
+	$(system_memory)
+	</body>
+	</html>
+_EOF_
+else
+	echo "please run as root"
+	exit
+
+
+
