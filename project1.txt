@@ -12,51 +12,60 @@ home_space() {
     du -s /home/* | sort -nr
     echo "</pre>"
 }
-
+#prints the systems architecture and kernal
 system_info() {
 	echo "<h2>System Info</h2>"
 	echo "<pre>"
 	uname -or
 	echo "</pre>"
 }
-
+#prints the uptime information of the system
 system_uptime(){
 	echo "<h2>System uptime</h2>"
 	echo "<pre>"
 	uptime
 	echo "</pre>"
 }
-
+#prints the memory information about the hard disks
 system_memory() {
 	echo "<h2>Filesystem space</h2>"
 	echo "<pre>"
 	df
 	echo "</pre>"
 }
-
+#prints the current ip address of the system
 system_ip() {
 	echo "<h2>IP Address</h2>"
 	echo "<pre>"
 	$ ip addr show eth0 | grep 'inet ' | awk '{print $2}' | cut -f1 -d'/'
 	echo "<pre>"
 }
+#creates the title for the report
 generate_report_title(){
 	echo "<h1>$TITLE</h1>"
 	echo "<h2>$TIMESTAMP</h2>"
 }
-
+#prints the used memory and free memory information of the system
+used_memory() {
+	echo "<h2>Memory Usage</h2>"
+	echo "<pre>"
+	free -m 
+	echo "</pre>"
+}
 
 
 #MAIN
 if [ "$(id -u)" = "0" ]; then
-	echo <<- _EOF_
+	cat <<- _EOF_ > project1.html
 		<html>
 		<head>
 				<title>
-				$(generate_report_title)
+				System Report
 				</title>
 		</head>
 		<body>
+		$(generate_report_title)
+		$(used_memory)
 		$(home_space)
 		$(system_uptime)
 		$(system_info)
